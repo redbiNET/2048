@@ -12,11 +12,12 @@ public class ColorContainer : MonoBehaviour
     public void Awake()
     {
         if (!_colorContainer) _colorContainer = this;
-        Debug.Log(_colorContainer);
     }
     static public Color GetCellColor(int value)
     {
-        return _colorContainer._cellColors[value];
+        return value < _colorContainer._cellColors.Length ?
+            _colorContainer._cellColors[value] :
+            _colorContainer._cellColors[_colorContainer._textColors.Length - 1];
     }
     
     static public Color GetTextColor(int value)

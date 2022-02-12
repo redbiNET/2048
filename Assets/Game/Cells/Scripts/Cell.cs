@@ -12,7 +12,7 @@ public class Cell : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _outputValue;
 
     [SerializeField] private float _speed;
-    private float _size;
+    [SerializeField] private float _sizeIncrease;
 
     public int Points { get; private set; }
     public int Value { get; private set; }
@@ -22,45 +22,37 @@ public class Cell : MonoBehaviour
     public Vector2Int Position { get; private set; }
 
     [SerializeField] private Image _image;
-    private Sequence _sequence;
 
-    public void IncreaceNumber()
+    public CellAnimation _cellAnimation;
+
+    public void IncreaceValue()
     {
         Points *= 2;
         Game.AddPoints(Points);
         ++Value;
         IsMerged = true;
-        DoScale();
+        _cellAnimation.DoScale();
+        _cellAnimation.CellSequence.OnComplete(UpdateCell);
     }
-    private void DoScale()
-    {
-        _sequence = DOTween.Sequence();
-        _sequence.Append(_rectTransform.DOScale(_rectTransform.localScale * 1.2f, _speed));
-        _sequence.Append(_rectTransform.DOScale(_rectTransform.localScale, _speed));
-        _sequence.OnComplete(UpdateCell);
-    }
+
     public void Initialize(Vector2Int startPosition, int startValue)
     {
-        _size = _rectTransform.sizeDelta.x *_rectTransform.localScale.x;
+        _cellAnimation = new CellAnimation(_rectTransform,_speed,_sizeIncrease);
+        _cellAnimation.Spawn(startPosition);
         Position = startPosition;
-        _rectTransform.localPosition = new Vector3(startPosition.x * _size + _size/2, startPosition.y * _size + _size / 2,0);
-        Points = 2 * (startValue + 1);
+
+        Points = (int)Mathf.Pow(2, startValue + 1);
         Value = startValue;
         UpdateCell();
     }
-    private void SetColor()
-    {
-        _image.color = ColorContainer.GetCellColor(Value);
-        _outputValue.color = ColorContainer.GetTextColor(Value);
 
-    }
     public bool TryMerge(Cell cellToMerge)
     {
         if(!cellToMerge.IsMerged && cellToMerge.Value == Value)
         {
             Move(cellToMerge.Position, true);
 
-            cellToMerge.IncreaceNumber();
+            cellToMerge.IncreaceValue();
             Game.AddPoints(Points);
             return true;
         }
@@ -69,7 +61,7 @@ public class Cell : MonoBehaviour
     public void Move(Vector2Int position, bool destroyOnComplete = false)
     {
         Position = position;
-        var _sequence = _rectTransform.DOLocalMove(new Vector3(position.x * _size + _size/2, position.y * _size + _size/2, 0), _speed);
+        var _sequence = _cellAnimation.Move(position);
         if (destroyOnComplete)
         { 
             _outputValue.text = string.Empty;
@@ -78,12 +70,50 @@ public class Cell : MonoBehaviour
     }
     private void UpdateCell()
     {
-        SetColor();
+        _image.color = ColorContainer.GetCellColor(Value);
+        _outputValue.color = ColorContainer.GetTextColor(Value);
         _outputValue.text = Points.ToString();
     }
     public void Delete()
     {
-        _sequence.Kill();
+        _cellAnimation.Kill();
         Destroy(gameObject);
+    }
+}
+[System.Serializable]
+public class CellAnimation
+{
+    [SerializeField] private float _speed;
+    [SerializeField] private float _sizeIncrease;
+    private float _size;
+
+    public Sequence CellSequence { get; private set; }
+    private RectTransform _rectTransform;
+
+    public CellAnimation(RectTransform transform, float speed, float sizeIncrease)
+    {
+        _rectTransform = transform;
+        _size = _rectTransform.sizeDelta.x *_rectTransform.localScale.x;
+        _speed = speed;
+        _sizeIncrease = sizeIncrease;
+    }
+    public void DoScale()
+    {
+        CellSequence = DOTween.Sequence();
+        CellSequence.Append(_rectTransform.DOScale(_rectTransform.localScale * _sizeIncrease, _speed));
+        CellSequence.Append(_rectTransform.DOScale(_rectTransform.localScale, _speed));
+    }
+    public Tween Move(Vector2Int position)
+    {
+        return _rectTransform.DOLocalMove(new Vector3(position.x * _size + _size/2, position.y * _size + _size/2, 0), _speed);
+    }
+    public void Spawn(Vector2Int position)
+    {
+        _rectTransform.DOScale(_rectTransform.localScale, _speed).From(Vector3.zero);
+        _rectTransform.localPosition = new Vector3(position.x * _size + _size/2, position.y * _size + _size / 2,0);    
+    }
+    public void Kill()
+    {
+        CellSequence.Kill();
     }
 }

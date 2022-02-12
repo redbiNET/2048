@@ -187,7 +187,11 @@ MonoBehaviour:
   _rectTransform: {fileID: 8480557592451658769}
   _outputValue: {fileID: 6460255232566001420}
   _speed: 0.1
+  _sizeIncrease: 1.1
   _image: {fileID: 3437741966742460153}
+  _cellAnimation:
+    _speed: 0.1
+    _sizeIncrease: 1.1
 --- !u!1 &6152658774922833753
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,7 +257,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6418f23f7497e1f4ca392131b40a5882, type: 3}
+  m_Sprite: {fileID: -5177388603050735206, guid: 456069c4f33a0d64aa57d6b1b07b3504, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -21,8 +21,6 @@ public class SwipeHandler : MonoBehaviour,IDragHandler, IPointerUpHandler,IPoint
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log(eventData.delta);
-        Debug.Log(direction);
         direction += eventData.delta;
         if (!_ishandlerDown) return;
         if (direction.x >= sensitivity.x) _action.Invoke(new Vector2Int(1, 0));
