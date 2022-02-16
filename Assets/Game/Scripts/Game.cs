@@ -10,11 +10,9 @@ public class Game : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _outputPoints;
 
-    [SerializeField] private GameObject LosePanel;
+    [SerializeField] private GameObject _losePanel;
 
     private int _points;
-
-    private int _boardSize;
 
     public int Points {
         get { return _points; }
@@ -34,8 +32,8 @@ public class Game : MonoBehaviour
     }
     private void Start()
     {
-        _boardSize = PlayerPrefs.GetInt("size");
-        _board.SetBoard(_boardSize);        
+        _board.SetBoard(PlayerPrefs.GetInt("size"));
+        Points = PlayerPrefs.GetInt("points" + _board.Size);
     }
     public static void AddPoints(int poins)
     {
@@ -44,7 +42,7 @@ public class Game : MonoBehaviour
 
     public static void LoseGame()
     {
-        _game.LosePanel.SetActive(true);
+        _game._losePanel.SetActive(true);
     }
 
     public void ReStart()
@@ -54,11 +52,13 @@ public class Game : MonoBehaviour
     }
     public void Quit()
     {
+        PlayerPrefs.SetInt("points" + _board.Size, Points);
         _board.Save();
         SceneManager.LoadScene(0);
     }
     private void OnApplicationPause(bool pause)
     {
+        PlayerPrefs.SetInt("points" + _board.Size, Points);
         _board.Save();
     }
 }

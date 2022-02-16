@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-     private int _size;
+    public int Size { get; private set; }
 
     private Cell[,] _cells;
 
@@ -15,10 +15,7 @@ public class Board : MonoBehaviour
     [SerializeField] private CellsFactory _cellsFactory;
 
     private BoardKeeper _boardKeeper;
-    private void Awake()
-    {
-        _swipeHandler.SetAction(MoveCells);
-    }
+
     private void Start()
     {
         GetRandomCell();        
@@ -26,12 +23,12 @@ public class Board : MonoBehaviour
     private void MoveCells(Vector2Int delta)
     {
         int dir = delta.x != 0 ? delta.x : delta.y;
-        int startIndex = dir < 0 ? 1 : _size - 2;
+        int startIndex = dir < 0 ? 1 : Size - 2;
         int movedCell = 0;
 
-        for (int x = 0; x < _size; x++)
+        for (int x = 0; x < Size; x++)
         {
-            for (int y = startIndex; y<_size && y>=0; y-= dir)
+            for (int y = startIndex; y<Size && y>=0; y-= dir)
             {
                 var cell = delta.y != 0 ? _cells[x, y] : _cells[y, x];
                 if (cell)
@@ -42,14 +39,14 @@ public class Board : MonoBehaviour
             }
         }
         UpdateCells();
-        if(movedCell > 0)
-        GetRandomCell();
+        if (movedCell > 0) GetRandomCell();
+        else if (!LookForaMove()) Game.LoseGame();
     }
     private int MoveCell(Cell cell, Vector2Int delta)
     {
         var startX = cell.Position.x + delta.x;
         var startY = cell.Position.y + delta.y;
-        for (int x = startX,y = startY; x < _size && x>= 0 && y < _size && y >= 0; x+= delta.x, y+=delta.y)
+        for (int x = startX,y = startY; x < Size && x>= 0 && y < Size && y >= 0; x+= delta.x, y+=delta.y)
         {
             Vector2Int nextPosition;
             var cellToMerge = _cells[x, y];
@@ -66,7 +63,7 @@ public class Board : MonoBehaviour
                 }
                 return 1;
             }
-            if (x + delta.x == _size || x + delta.x < 0 || y + delta.y == _size || y + delta.y < 0)
+            if (x + delta.x == Size || x + delta.x < 0 || y + delta.y == Size || y + delta.y < 0)
             {
                 _cells[cell.Position.x, cell.Position.y] = null;
                 _cells[x, y] = cell;
@@ -80,9 +77,9 @@ public class Board : MonoBehaviour
     private void GetRandomCell()
     {
         List<Vector2Int> voidPositions = new List<Vector2Int>();
-        for(int x =0; x < _size; x++) 
+        for(int x =0; x < Size; x++) 
         {
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
                 if (!_cells[x, y])
                 {
@@ -103,9 +100,9 @@ public class Board : MonoBehaviour
     private void UpdateCells()
     {
 
-        for (int x = 0; x < _size; x++)
+        for (int x = 0; x < Size; x++)
         {
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
                 if (_cells[x, y])
                 {
@@ -116,14 +113,14 @@ public class Board : MonoBehaviour
     }
     public void SetBoard(int size)
     {
-        _size = size;
-        _cells = new Cell[_size,_size];
-        Vector3 scale = _backGround.localScale / _size;
+        Size = size;
+        _cells = new Cell[Size,Size];
+        Vector3 scale = _backGround.localScale / Size;
         _cellsFactory.Initialize(scale, transform);
         float step = scale.x * _backGround.sizeDelta.x;
-        for (float x = step/2,i =0 ; i < _size; x+=step, i+= 1)
+        for (float x = step/2,i =0 ; i < Size; x+=step, i+= 1)
         {
-            for (float y = step/2,j =0; j < _size; y+= step, j += 1)
+            for (float y = step/2,j =0; j < Size; y+= step, j += 1)
             {
                 GameObject cell = Instantiate(_emptyCell.gameObject, transform);
                 cell.transform.localPosition = new Vector3(x, y,1);
@@ -132,10 +129,23 @@ public class Board : MonoBehaviour
         }
         _boardKeeper = new BoardKeeper(_cellsFactory);
         _boardKeeper.SetBoard(_cells);
+        _swipeHandler.SetAction(MoveCells);
     }
     public void Save()
     {
-        _boardKeeper.SaveBoard(_cells);
+        _boardKeeper?.SaveBoard(_cells);
     }
-
+    private bool LookForaMove()
+    {
+        if (!_cells[0, 0]) return true;
+        for (int x = 0; x < Size; x++)
+        {
+            for (int y = 0; y < Size; y++)
+            {
+                if ((y<Size-1 && (!_cells[x, y + 1] || _cells[x, y].Value == _cells[x, y + 1].Value)) ||
+                    (x<Size-1 && (!_cells[x + 1, y] || _cells[x, y].Value == _cells[x + 1, y].Value))) return true;
+            }
+        }
+        return false;
+    }
 }
