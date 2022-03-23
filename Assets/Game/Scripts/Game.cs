@@ -11,6 +11,9 @@ public class Game : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _outputPoints;
 
     [SerializeField] private GameObject _losePanel;
+    [SerializeField] private GameObject _victoryPanel;
+
+    public bool IsGameWin { get; private set; }
 
     private int _points;
 
@@ -45,6 +48,16 @@ public class Game : MonoBehaviour
         _game._losePanel.SetActive(true);
     }
 
+    public static void WinGame()
+    {
+        if (_game.IsGameWin) return;
+        _game._victoryPanel.SetActive(true);
+        _game.IsGameWin = true;
+    }
+    public void ContinueGame()
+    {
+        _victoryPanel.SetActive(false);
+    }
     public void ReStart()
     {
         Time.timeScale = 1;

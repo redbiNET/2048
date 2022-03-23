@@ -17,6 +17,7 @@ public class Cell : MonoBehaviour
     public int Points { get; private set; }
     public int Value { get; private set; }
 
+    [SerializeField] private int _maxValue = 11;
     public bool IsMerged { get; set; }
 
     public Vector2Int Position { get; private set; }
@@ -30,6 +31,7 @@ public class Cell : MonoBehaviour
         Points *= 2;
         Game.AddPoints(Points);
         ++Value;
+        if (Value == _maxValue) Game.WinGame();
         IsMerged = true;
         _cellAnimation.DoScale();
         _cellAnimation.CellSequence.OnComplete(UpdateCell);
