@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -46,6 +45,7 @@ public class Game : MonoBehaviour
     public static void LoseGame()
     {
         _game._losePanel.SetActive(true);
+        AdsManager.ShowVideoAds();
     }
 
     public static void WinGame()

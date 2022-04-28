@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
@@ -90,7 +89,7 @@ public class CellAnimation
     private float _size;
 
     public Sequence CellSequence { get; private set; }
-    private RectTransform _rectTransform;
+    private readonly RectTransform _rectTransform;
 
     public CellAnimation(RectTransform transform, float speed, float sizeIncrease)
     {

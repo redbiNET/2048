@@ -15,11 +15,11 @@ D:/unity/2048
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-51065
+55510
 Successfully changed project path to: D:/unity/2048
 D:/unity/2048
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 50.93 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 60.71 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.11f1 (99c7afb366b3)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/Resources/UnitySubsystems
@@ -30,48 +30,48 @@ Direct3D:
     Renderer: NVIDIA GeForce GTX 1050 (ID=0x1c81)
     Vendor:   
     VRAM:     1977 MB
-    Driver:   30.0.14.9729
+    Driver:   30.0.15.1215
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56968
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56344
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001751 seconds.
+Registered in 0.001708 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 49.10 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 56.11 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  2.739 seconds
+- Completed reload, in  2.848 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004447 seconds.
+Registered in 0.004917 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 47.16 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 55.63 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.458 seconds
+- Completed reload, in  1.297 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.35 seconds
-Refreshing native plugins compatible for Editor in 0.62 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.73 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2147 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 96.4 MB.
-System memory in use after: 96.4 MB.
+Unloading 2250 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 98.9 MB.
+System memory in use after: 98.8 MB.
 
-Unloading 35 unused Assets to reduce memory usage. Loaded Objects now: 2584.
-Total: 3.699711 ms (FindLiveObjects: 0.306517 ms CreateObjectMapping: 0.105813 ms MarkObjects: 3.105450 ms  DeleteObjects: 0.180565 ms)
+Unloading 50 unused Assets to reduce memory usage. Loaded Objects now: 2672.
+Total: 3.497982 ms (FindLiveObjects: 0.305493 ms CreateObjectMapping: 0.109909 ms MarkObjects: 2.868905 ms  DeleteObjects: 0.212309 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Game/Cells/Prefabs/Cell.prefab
-  artifactKey: Guid(224abc12041c748408db562cb82a2788) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Game/Cells/Prefabs/Cell.prefab using Guid(224abc12041c748408db562cb82a2788) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '09556283f970a8a85a9a70c9e8355ab9') in 0.917805 seconds
-  Import took 0.922545 seconds .
+  path: Assets/RPG Swords/sword02.FBX
+  artifactKey: Guid(3bd1b773913e1a3428b48ca4b9f9248f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RPG Swords/sword02.FBX using Guid(3bd1b773913e1a3428b48ca4b9f9248f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae340b3659c9091f8be53a14f46b3919') in 10.257438 seconds
+  Import took 10.262156 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
