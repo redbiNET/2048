@@ -34,7 +34,7 @@ public class Game : MonoBehaviour
     }
     private void Start()
     {
-        _board.SetBoard(PlayerPrefs.GetInt("size"));
+        _board.Initialize(PlayerPrefs.GetInt("size"));
         Points = PlayerPrefs.GetInt("points" + _board.Size);
     }
     public static void AddPoints(int poins)
@@ -71,7 +71,15 @@ public class Game : MonoBehaviour
     }
     private void OnApplicationPause(bool pause)
     {
-        PlayerPrefs.SetInt("points" + _board.Size, Points);
-        _board.Save();
+        if (pause)
+        { 
+            PlayerPrefs.SetInt("points" + _board.Size, Points);
+            _board.Save();        
+        }
+        else
+        {
+            _board.Initialize(PlayerPrefs.GetInt("size"));
+            Points = PlayerPrefs.GetInt("points" + _board.Size);
+        }
     }
 }

@@ -10,9 +10,6 @@ public class Cell : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _outputValue;
 
-    [SerializeField] private float _speed;
-    [SerializeField] private float _sizeIncrease;
-
     public int Points { get; private set; }
     public int Value { get; private set; }
 
@@ -38,7 +35,7 @@ public class Cell : MonoBehaviour
 
     public void Initialize(Vector2Int startPosition, int startValue)
     {
-        _cellAnimation = new CellAnimation(_rectTransform,_speed,_sizeIncrease);
+        _cellAnimation.Initialize(_rectTransform);
         _cellAnimation.Spawn(startPosition);
         Position = startPosition;
 
@@ -79,42 +76,5 @@ public class Cell : MonoBehaviour
     {
         _cellAnimation.Kill();
         Destroy(gameObject);
-    }
-}
-[System.Serializable]
-public class CellAnimation
-{
-    [SerializeField] private float _speed;
-    [SerializeField] private float _sizeIncrease;
-    private float _size;
-
-    public Sequence CellSequence { get; private set; }
-    private readonly RectTransform _rectTransform;
-
-    public CellAnimation(RectTransform transform, float speed, float sizeIncrease)
-    {
-        _rectTransform = transform;
-        _size = _rectTransform.sizeDelta.x *_rectTransform.localScale.x;
-        _speed = speed;
-        _sizeIncrease = sizeIncrease;
-    }
-    public void DoScale()
-    {
-        CellSequence = DOTween.Sequence();
-        CellSequence.Append(_rectTransform.DOScale(_rectTransform.localScale * _sizeIncrease, _speed));
-        CellSequence.Append(_rectTransform.DOScale(_rectTransform.localScale, _speed));
-    }
-    public Tween Move(Vector2Int position)
-    {
-        return _rectTransform.DOLocalMove(new Vector3(position.x * _size + _size/2, position.y * _size + _size/2, 0), _speed);
-    }
-    public void Spawn(Vector2Int position)
-    {
-        _rectTransform.DOScale(_rectTransform.localScale, _speed).From(Vector3.zero);
-        _rectTransform.localPosition = new Vector3(position.x * _size + _size/2, position.y * _size + _size / 2,0);    
-    }
-    public void Kill()
-    {
-        CellSequence.Kill();
     }
 }

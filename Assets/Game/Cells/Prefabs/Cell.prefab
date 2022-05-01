@@ -186,13 +186,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 8480557592451658769}
   _outputValue: {fileID: 6460255232566001420}
-  _speed: 0.1
-  _sizeIncrease: 1.1
   _maxValue: 11
   _image: {fileID: 3437741966742460153}
   _cellAnimation:
-    _speed: 0.1
-    _sizeIncrease: 1.1
+    _speed: 0.11
+    _sizeIncrease: 1.13
 --- !u!1 &6152658774922833753
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class Board : MonoBehaviour
 
     private void Start()
     {
-        GetRandomCell();        
+        SpawnRandomCell();        
     }
     private void MoveCells(Vector2Int delta)
     {
@@ -39,8 +39,8 @@ public class Board : MonoBehaviour
             }
         }
         UpdateCells();
-        if (movedCell > 0) GetRandomCell();
-        else if (!LookForaMove()) Game.LoseGame();
+        if (movedCell > 0) SpawnRandomCell();
+        else if (!CheckMovePossibility()) Game.LoseGame();
     }
     private int MoveCell(Cell cell, Vector2Int delta)
     {
@@ -74,7 +74,7 @@ public class Board : MonoBehaviour
         return 1;
     }
 
-    private void GetRandomCell()
+    private void SpawnRandomCell()
     {
         List<Vector2Int> voidPositions = new List<Vector2Int>();
         for(int x =0; x < Size; x++) 
@@ -99,7 +99,6 @@ public class Board : MonoBehaviour
     }
     private void UpdateCells()
     {
-
         for (int x = 0; x < Size; x++)
         {
             for (int y = 0; y < Size; y++)
@@ -111,7 +110,7 @@ public class Board : MonoBehaviour
             }
         }
     }
-    public void SetBoard(int size)
+    public void Initialize(int size)
     {
         Size = size;
         _cells = new Cell[Size,Size];
@@ -135,7 +134,7 @@ public class Board : MonoBehaviour
     {
         _boardKeeper?.SaveBoard(_cells);
     }
-    private bool LookForaMove()
+    private bool CheckMovePossibility()
     {
         if (!_cells[0, 0]) return true;
         for (int x = 0; x < Size; x++)
